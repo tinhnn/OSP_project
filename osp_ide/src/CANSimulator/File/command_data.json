@@ -1,0 +1,707 @@
+[
+  {
+    "id": 1,
+    "name": "CAN_MSG1",
+    "id_format": "standard",
+    "dlc": 8,
+    "tx_method": "cyclic",
+    "cycle_time": 100,
+    "transmitter": "M7G",
+    "comment": "no comment",
+    "signals": [
+      {
+        "id": 0,
+        "name": "sig_name_0",
+        "start_bit": 0,
+        "length": 1,
+        "byte_order": "little_endian",
+        "value_type": "enum",
+        "description": [
+          {
+            "name": "VAL_0",
+            "value": 0,
+            "comment": ""
+          },
+          {
+            "name": "VAL_1",
+            "value": 2,
+            "comment": ""
+          },
+          {
+            "name": "VAL_2",
+            "value": 4,
+            "comment": ""
+          }
+        ],
+        "init_value": 0,
+        "resolution": 2,
+        "minimum": 0,
+        "maximum": 4
+      },
+      {
+        "id": 1,
+        "name": "sig_name_1",
+        "start_bit": 1,
+        "length": 3,
+        "byte_order": "little_endian",
+        "value_type": "enum",
+        "description": [
+          {
+            "name": "OFF",
+            "value": 0,
+            "comment": ""
+          },
+          {
+            "name": "ON",
+            "value": 1,
+            "comment": ""
+          }
+        ],
+        "init_value": 0,
+        "resolution": 1,
+        "minimum": 0,
+        "maximum": 1
+      },
+      {
+        "id": 2,
+        "name": "sig_name_2",
+        "start_bit": 4,
+        "length": 4,
+        "byte_order": "little_endian",
+        "value_type": "enum",
+        "description": [
+          {
+            "name": "MIN",
+            "value": 0,
+            "comment": ""
+          },
+          {
+            "name": "MID",
+            "value": 1,
+            "comment": ""
+          },
+          {
+            "name": "MAX",
+            "value": 2,
+            "comment": ""
+          }
+        ],
+        "init_value": 0,
+        "resolution": 1,
+        "minimum": 0,
+        "maximum": 2
+      },
+      {
+        "id": 3,
+        "name": "sig_name_3",
+        "start_bit": 4,
+        "length": 4,
+        "byte_order": "little_endian",
+        "value_type": "enum",
+        "description": [
+          {
+            "name": "MIN",
+            "value": 0,
+            "comment": ""
+          },
+          {
+            "name": "MID",
+            "value": 1,
+            "comment": ""
+          },
+          {
+            "name": "MAX",
+            "value": 2,
+            "comment": ""
+          }
+        ],
+        "init_value": 0,
+        "resolution": 1,
+        "minimum": 0,
+        "maximum": 2
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "name": "CAN_MSG2",
+    "id_format": "standard",
+    "dlc": 3,
+    "tx_method": "cyclic",
+    "cycle_time": 0,
+    "transmitter": "M7G",
+    "comment": "NOT required",
+    "signals": [
+      {
+        "id": 0,
+        "name": "signal_1",
+        "start_bit": 0,
+        "length": 2,
+        "byte_order": "little_endian",
+        "value_type": "signed",
+        "description": [
+          {
+            "name": "",
+            "value": 1,
+            "comment": ""
+          }
+        ],
+        "init_value": 0,
+        "resolution": 1,
+        "minimum": 0,
+        "maximum": 3
+      },
+      {
+        "id": 0,
+        "name": "signal_2",
+        "start_bit": 2,
+        "length": 1,
+        "byte_order": "little_endian",
+        "value_type": "signed",
+        "description": [
+          {
+            "name": "",
+            "value": 1,
+            "comment": ""
+          }
+        ],
+        "init_value": 0,
+        "resolution": 2,
+        "minimum": 0,
+        "maximum": 6
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "name": "CAN_MSG3",
+    "id_format": "standard",
+    "dlc": 8,
+    "tx_method": "cyclic",
+    "cycle_time": 100,
+    "transmitter": "M7G",
+    "comment": "no comment",
+    "signals": [
+      {
+        "id": 0,
+        "name": "sig_name_0",
+        "start_bit": 0,
+        "length": 1,
+        "byte_order": "little_endian",
+        "value_type": "enum",
+        "description": [
+          {
+            "name": "VAL_0",
+            "value": 0,
+            "comment": ""
+          },
+          {
+            "name": "VAL_1",
+            "value": 2,
+            "comment": ""
+          },
+          {
+            "name": "VAL_2",
+            "value": 4,
+            "comment": ""
+          }
+        ],
+        "init_value": 0,
+        "resolution": 2,
+        "minimum": 0,
+        "maximum": 4
+      },
+      {
+        "id": 1,
+        "name": "sig_name_1",
+        "start_bit": 1,
+        "length": 3,
+        "byte_order": "little_endian",
+        "value_type": "enum",
+        "description": [
+          {
+            "name": "OFF",
+            "value": 0,
+            "comment": ""
+          },
+          {
+            "name": "ON",
+            "value": 1,
+            "comment": ""
+          }
+        ],
+        "init_value": 0,
+        "resolution": 1,
+        "minimum": 0,
+        "maximum": 1
+      },
+      {
+        "id": 2,
+        "name": "sig_name_2",
+        "start_bit": 4,
+        "length": 4,
+        "byte_order": "little_endian",
+        "value_type": "enum",
+        "description": [
+          {
+            "name": "MIN",
+            "value": 0,
+            "comment": ""
+          },
+          {
+            "name": "MID",
+            "value": 1,
+            "comment": ""
+          },
+          {
+            "name": "MAX",
+            "value": 2,
+            "comment": ""
+          }
+        ],
+        "init_value": 0,
+        "resolution": 1,
+        "minimum": 0,
+        "maximum": 2
+      }
+    ]
+  },
+  {
+    "id": 4,
+    "name": "CAN_MSG4",
+    "id_format": "standard",
+    "dlc": 3,
+    "tx_method": "cyclic",
+    "cycle_time": 0,
+    "transmitter": "M7G",
+    "comment": "NOT required",
+    "signals": [
+      {
+        "id": 0,
+        "name": "signal_1",
+        "start_bit": 0,
+        "length": 2,
+        "byte_order": "little_endian",
+        "value_type": "signed",
+        "description": [
+          {
+            "name": "",
+            "value": 1,
+            "comment": ""
+          }
+        ],
+        "init_value": 0,
+        "resolution": 1,
+        "minimum": 0,
+        "maximum": 3
+      },
+      {
+        "id": 0,
+        "name": "signal_2",
+        "start_bit": 2,
+        "length": 1,
+        "byte_order": "little_endian",
+        "value_type": "signed",
+        "description": [
+          {
+            "name": "",
+            "value": 1,
+            "comment": ""
+          }
+        ],
+        "init_value": 0,
+        "resolution": 2,
+        "minimum": 0,
+        "maximum": 6
+      }
+    ]
+  },
+  {
+    "id": 5,
+    "name": "CAN_MSG5",
+    "id_format": "standard",
+    "dlc": 8,
+    "tx_method": "cyclic",
+    "cycle_time": 100,
+    "transmitter": "M7G",
+    "comment": "no comment",
+    "signals": [
+      {
+        "id": 0,
+        "name": "sig_name_0",
+        "start_bit": 0,
+        "length": 1,
+        "byte_order": "little_endian",
+        "value_type": "enum",
+        "description": [
+          {
+            "name": "VAL_0",
+            "value": 0,
+            "comment": ""
+          },
+          {
+            "name": "VAL_1",
+            "value": 2,
+            "comment": ""
+          },
+          {
+            "name": "VAL_2",
+            "value": 4,
+            "comment": ""
+          }
+        ],
+        "init_value": 0,
+        "resolution": 2,
+        "minimum": 0,
+        "maximum": 4
+      },
+      {
+        "id": 1,
+        "name": "sig_name_1",
+        "start_bit": 1,
+        "length": 3,
+        "byte_order": "little_endian",
+        "value_type": "enum",
+        "description": [
+          {
+            "name": "OFF",
+            "value": 0,
+            "comment": ""
+          },
+          {
+            "name": "ON",
+            "value": 1,
+            "comment": ""
+          }
+        ],
+        "init_value": 0,
+        "resolution": 1,
+        "minimum": 0,
+        "maximum": 1
+      },
+      {
+        "id": 2,
+        "name": "sig_name_2",
+        "start_bit": 4,
+        "length": 4,
+        "byte_order": "little_endian",
+        "value_type": "enum",
+        "description": [
+          {
+            "name": "MIN",
+            "value": 0,
+            "comment": ""
+          },
+          {
+            "name": "MID",
+            "value": 1,
+            "comment": ""
+          },
+          {
+            "name": "MAX",
+            "value": 2,
+            "comment": ""
+          }
+        ],
+        "init_value": 0,
+        "resolution": 1,
+        "minimum": 0,
+        "maximum": 2
+      }
+    ]
+  },
+  {
+    "id": 6,
+    "name": "CAN_MSG6",
+    "id_format": "standard",
+    "dlc": 3,
+    "tx_method": "cyclic",
+    "cycle_time": 0,
+    "transmitter": "M7G",
+    "comment": "NOT required",
+    "signals": [
+      {
+        "id": 0,
+        "name": "signal_1",
+        "start_bit": 0,
+        "length": 2,
+        "byte_order": "little_endian",
+        "value_type": "signed",
+        "description": [
+          {
+            "name": "",
+            "value": 1,
+            "comment": ""
+          }
+        ],
+        "init_value": 0,
+        "resolution": 1,
+        "minimum": 0,
+        "maximum": 3
+      },
+      {
+        "id": 0,
+        "name": "signal_2",
+        "start_bit": 2,
+        "length": 1,
+        "byte_order": "little_endian",
+        "value_type": "signed",
+        "description": [
+          {
+            "name": "",
+            "value": 1,
+            "comment": ""
+          }
+        ],
+        "init_value": 0,
+        "resolution": 2,
+        "minimum": 0,
+        "maximum": 6
+      }
+    ]
+  },
+  {
+    "id": 7,
+    "name": "CAN_MSG7",
+    "id_format": "standard",
+    "dlc": 8,
+    "tx_method": "cyclic",
+    "cycle_time": 100,
+    "transmitter": "M7G",
+    "comment": "no comment",
+    "signals": [
+      {
+        "id": 0,
+        "name": "sig_name_0",
+        "start_bit": 0,
+        "length": 1,
+        "byte_order": "little_endian",
+        "value_type": "enum",
+        "description": [
+          {
+            "name": "VAL_0",
+            "value": 0,
+            "comment": ""
+          },
+          {
+            "name": "VAL_1",
+            "value": 2,
+            "comment": ""
+          },
+          {
+            "name": "VAL_2",
+            "value": 4,
+            "comment": ""
+          }
+        ],
+        "init_value": 0,
+        "resolution": 2,
+        "minimum": 0,
+        "maximum": 4
+      },
+      {
+        "id": 1,
+        "name": "sig_name_1",
+        "start_bit": 1,
+        "length": 3,
+        "byte_order": "little_endian",
+        "value_type": "enum",
+        "description": [
+          {
+            "name": "OFF",
+            "value": 0,
+            "comment": ""
+          },
+          {
+            "name": "ON",
+            "value": 1,
+            "comment": ""
+          }
+        ],
+        "init_value": 0,
+        "resolution": 1,
+        "minimum": 0,
+        "maximum": 1
+      },
+      {
+        "id": 2,
+        "name": "sig_name_2",
+        "start_bit": 4,
+        "length": 4,
+        "byte_order": "little_endian",
+        "value_type": "enum",
+        "description": [
+          {
+            "name": "MIN",
+            "value": 0,
+            "comment": ""
+          },
+          {
+            "name": "MID",
+            "value": 1,
+            "comment": ""
+          },
+          {
+            "name": "MAX",
+            "value": 2,
+            "comment": ""
+          }
+        ],
+        "init_value": 0,
+        "resolution": 1,
+        "minimum": 0,
+        "maximum": 2
+      }
+    ]
+  },
+  {
+    "id": 8,
+    "name": "CAN_MSG8",
+    "id_format": "standard",
+    "dlc": 3,
+    "tx_method": "cyclic",
+    "cycle_time": 0,
+    "transmitter": "M7G",
+    "comment": "NOT required",
+    "signals": [
+      {
+        "id": 0,
+        "name": "signal_1",
+        "start_bit": 0,
+        "length": 2,
+        "byte_order": "little_endian",
+        "value_type": "signed",
+        "description": [
+          {
+            "name": "",
+            "value": 1,
+            "comment": ""
+          }
+        ],
+        "init_value": 0,
+        "resolution": 1,
+        "minimum": 0,
+        "maximum": 3
+      },
+      {
+        "id": 0,
+        "name": "signal_2",
+        "start_bit": 2,
+        "length": 1,
+        "byte_order": "little_endian",
+        "value_type": "signed",
+        "description": [
+          {
+            "name": "",
+            "value": 1,
+            "comment": ""
+          }
+        ],
+        "init_value": 0,
+        "resolution": 2,
+        "minimum": 0,
+        "maximum": 6
+      }
+    ]
+  },
+  {
+    "id": 9,
+    "name": "CMDName___new9",
+    "id_format": "standard",
+    "dlc": 3,
+    "tx_method": "cyclic",
+    "cycle_time": 0,
+    "transmitter": "M7G",
+    "comment": "NOT required",
+    "signals": [
+      {
+        "id": 0,
+        "name": "sig_name_0",
+        "start_bit": 0,
+        "length": 3,
+        "byte_order": "little_endian",
+        "value_type": "signed",
+        "description": [
+          {
+            "name": "",
+            "value": 1,
+            "comment": ""
+          }
+        ],
+        "init_value": 0,
+        "resolution": 2,
+        "minimum": 0,
+        "maximum": 6
+      },
+      {
+        "id": 0,
+        "name": "sig_name_1",
+        "start_bit": 3,
+        "length": 4,
+        "byte_order": "little_endian",
+        "value_type": "signed",
+        "description": [
+          {
+            "name": "",
+            "value": 1,
+            "comment": ""
+          }
+        ],
+        "init_value": 0,
+        "resolution": 1,
+        "minimum": 0,
+        "maximum": 4
+      },
+      {
+        "id": 0,
+        "name": "sig_name_2",
+        "start_bit": 7,
+        "length": 5,
+        "byte_order": "little_endian",
+        "value_type": "signed",
+        "description": [
+          {
+            "name": "",
+            "value": 1,
+            "comment": ""
+          }
+        ],
+        "init_value": 0,
+        "resolution": 1,
+        "minimum": 0,
+        "maximum": 3
+      }
+    ]
+  },
+  {
+    "id": 10,
+    "name": "CMDName___new10",
+    "id_format": "standard",
+    "dlc": 1,
+    "tx_method": "cyclic",
+    "cycle_time": 0,
+    "transmitter": "M7G",
+    "comment": "NOT required",
+    "signals": [
+      {
+        "id": 0,
+        "name": "sig_name_0",
+        "start_bit": 0,
+        "length": 1,
+        "byte_order": "little_endian",
+        "value_type": "signed",
+        "description": [
+          {
+            "name": "",
+            "value": 1,
+            "comment": ""
+          }
+        ],
+        "init_value": 0,
+        "resolution": 1,
+        "minimum": 0,
+        "maximum": 2
+      }
+    ]
+  }
+]

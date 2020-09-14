@@ -1,0 +1,10 @@
+module test
+
+def loop()
+    imp std:msleep/1
+	lsi 1000
+	ivk 1
+	
+	jmp -4
+    ret
+end

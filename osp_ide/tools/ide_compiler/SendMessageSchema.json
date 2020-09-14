@@ -1,0 +1,40 @@
+{
+ "list_message" : {
+    "type": "array",
+    "additionalItems": false,
+    "minItems": 0,
+    "maxItems": 1000,
+    "uniqueItems": false,
+    "items": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "cycletime": {
+          "type": "integer"
+        },
+        "transmitter": {
+          "type": "string"
+        },
+        "signals": {
+          "type": "array",
+          "additionalItems": true,
+          "uniqueItems": true,
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "value": {
+              "type": "integer"
+            }
+          },
+          "required": [ "name", "value" ]
+        }
+      },
+      "required": [ "id" ]
+    },
+    "title": "send command",
+    "description": "send command"
+  }
+}

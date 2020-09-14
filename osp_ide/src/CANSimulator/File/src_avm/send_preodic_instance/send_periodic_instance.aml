@@ -1,0 +1,271 @@
+module send_periodic
+
+def main()
+	
+	var [cur_ver, new_ver, result, lst_msg, idx, total, cur_tuple]
+	// get old version	
+	imp periodic_message:get_version/0
+	ivk 0
+	slv cur_ver
+
+	imp periodic_message:get_list_command/0
+	ivk 0
+	slv lst_msg
+
+s_while:
+
+	// loop to send command
+
+	// get current version
+	imp periodic_message:get_version/0
+	ivk 0
+	slv new_ver
+
+	// compare version
+	// if curr_verion != old_version update send list	
+	llv cur_ver
+	llv new_ver
+	eq
+	not	
+	// if not equal => merger list, otherwise jump to send message
+	jin send_lst_msg
+
+	// merger list command
+	imp send_periodic:merger_cmds/2
+	imp periodic_message:get_list_command/0
+	ivk 0 
+	llv lst_msg
+	ivk 2
+	slv lst_msg
+
+	// set cur_ver = new_ver
+	imp periodic_message:get_version/0
+	ivk 0
+	slv cur_ver
+
+send_lst_msg:
+	// idx = 0
+	lsi 0
+	slv idx
+
+	// total = size(lst_msg)
+	imp std-tuple:size/1
+	llv lst_msg
+	ivk 1
+	slv total
+
+s_for:
+	// foreach (to_sent in to_sents) 
+	// idx < total sent msg	
+	llv idx
+	llv total
+	gt
+	// jump to sleep label
+	jin sleep
+	
+	// get tuple idx
+	imp std-tuple:get/2
+	llv idx
+	llv lst_msg
+	ivk 2
+	slv cur_tuple
+
+	// compare count vs periodic
+	// imp std-io:greater/2
+	imp std-tuple:get/2
+	lsi 0 
+	llv cur_tuple
+	ivk 2
+	imp std-tuple:get/2
+	lsi 1 
+	llv cur_tuple
+	ivk 2
+	gt
+	//ivk 2
+	// if periodic > counter => jump to lable send msg
+	jin send_msg
+
+	// counter ++
+	imp send_periodic:increase_counter/1
+	llv cur_tuple
+	ivk 1
+	pop 1
+
+	// jump to label idx++
+	jmp increase_idx
+
+send_msg:
+	// send msg
+	imp send_periodic:send_msg/1
+	llv cur_tuple
+	ivk 1
+
+	// counter = 0
+	imp std-tuple:set/3
+	lsi 0
+	lsi 0
+	llv cur_tuple
+	ivk 3
+
+increase_idx:	
+	// idx++
+	llv idx
+	lsi 1
+	add
+	slv idx
+
+	// jump back to for
+	jmp s_for
+
+sleep:
+	// sleep 1ms & jump back to loop
+	imp std:msleep/1
+	lsi 1
+	ivk 1
+	
+	jmp s_while
+
+	ret
+end
+
+def merger_cmds(old_cmds, new_cmds)
+	/*var [old_count, new_count, old_idx, new_idx, old_cmd, new_cmd, new_cmd_id]
+
+	// get total old_cmds
+	imp std-tuple:size/1
+	llv old_cmds
+	ivk 1
+	slv old_count
+
+	// get total new_cmds
+	imp std-tuple:size/1
+	llv new_cmds
+	ivk 1
+	slv new_count
+
+	// idx_new = 0
+	lsi 0
+	slv new_idx
+
+	
+loop_new_cmds:
+	// for new_cmds: new_idx < new_count
+	llv new_idx
+	llv new_count
+	gt
+	jin return 
+
+	// get current item new_cmd = new_cmds[new_idx]
+	imp std-tuple:get/2
+	llv new_idx
+	llv new_cmds
+	ivk 2
+	slv new_cmd
+
+	imp can_db:id/1
+	imp std-tuple:get/2
+	lsi 2
+	llv new_cmd
+	ivk 2
+	ivk 1
+	slv new_cmd_id
+
+	// old_idx = 0
+	lsi 0
+	slv old_idx
+
+loop_old_cmds:
+	// for old_cmds: old_idx < old_count
+	llv old_idx
+	llv old_count
+	gt
+	jin loop_new_cmds
+
+	// get current item old_cmd = old_cmds[old_idx]
+	imp std-tuple:get/2
+	llv old_idx
+	llv old_cmds
+	ivk 2
+	slv old_cmd
+
+	// compare id cmd
+	// old id cmd
+	imp can_db:id/1
+	imp std-tuple:get/2
+	lsi 2
+	llv old_cmd
+	ivk 2
+	ivk 1
+
+	// new id cmd
+	llv new_cmd_id
+	eq
+	jin loop_old_cmds
+
+	// update counter: new_counter = old_counter, jump to loop_new_cmds
+	imp std-tuple:set/3
+	imp std-tuple:get/2
+	lsi 0
+	llv old_cmd
+	ivk 2
+	lsi 0
+	llv new_cmd
+	ivk 3
+
+	jmp loop_new_cmds
+
+return:
+*/
+	llv new_cmds
+	ret
+end 
+
+def send_msg(msg)
+	var [interface, data]
+
+	// get interface
+	imp std-tuple:get/2
+	lsi 4
+	llv msg
+	ivk 2
+	slv interface
+
+	// get data
+	imp std-tuple:get/2
+	lsi 3
+	llv msg
+	ivk 2
+	slv data
+
+	// send msg
+	imp gen_can_mw:send/2
+	llv data
+	llv interface
+	ivk 2
+
+	ret
+end 
+
+def increase_counter(msg)
+	
+	var [next_counter]
+	imp std-tuple:get/2
+	lsi 0
+	llv msg
+	ivk 2
+	slv next_counter
+
+	llv next_counter
+	lsi 1
+	add
+	slv next_counter
+
+	imp std-tuple:set/3
+	llv next_counter
+	lsi 0
+	llv msg
+	ivk 3
+
+	ret
+end 
+

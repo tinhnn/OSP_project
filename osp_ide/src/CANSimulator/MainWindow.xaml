@@ -1,0 +1,225 @@
+﻿<Window x:Class="WpfApplication3.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WpfApplication3"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="720" Width="1050" ResizeMode="CanMinimize"
+        Closing="Window_Closing">
+    <!--declare resource for grid 2'nd-->
+    <StackPanel x:Name="Page" >
+        <StackPanel x:Name="spChoiceListCommand" IsEnabled="{Binding isViewCommand}" HorizontalAlignment="Left" Width="1050" Height="120" Background="WhiteSmoke">
+            <Label Content="Choice command in this list!" FontWeight="Bold"  Height="30"></Label>
+            <StackPanel Orientation="Horizontal">
+                <ListBox x:Name ="lbChoiceListCmd" ItemsSource="{Binding arrCmdJson}" HorizontalAlignment="Left" Height="90" Width="500" 
+                 SelectionMode="Multiple">
+                    <ListBox.ItemTemplate >
+                        <DataTemplate DataType = "{x:Type local:CommandJson_}">
+                            <StackPanel Orientation="Horizontal" >
+                                <Label Content="{Binding id}" Width="100" Height="30"/>
+                                <Label Content="{Binding name}" Width="200" Height="30"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+                <Button Content="SellectAll" Width="100" Height = "30" Click="btSellectAllCmd_Click" Margin="30,0,0,20"/>
+                <Button Content="UnSellectAll" Width="100" Height = "30" Click="btUnSellectAllCmd_Click" Margin="30,0,0,20"/>
+                <Button Content="Add!" Width="100" Height = "30" Click="btSaveSellectCmd_Click" Margin="30,0,0,20"/>
+            </StackPanel>
+
+        </StackPanel>
+        <StackPanel x:Name="spTitleCommand" HorizontalAlignment="Left" Orientation="Horizontal" Width="1050" Height="210">
+            <!--Height= "360"-->
+            <Border BorderBrush="Black" BorderThickness="1">
+                <StackPanel x:Name="spListCommad" Width="800">
+                    <!--List all command in here-->
+                    <!--Tittle table-->
+                    <StackPanel x:Name="titleCommand" Orientation="Horizontal" Background="Pink" Height = "30" Width="800">
+                        <Label Content="Row" Width = "50"/>
+                        <Label Content="Send" Width = "80"/>
+                        <Label Content="Trigger" Width = "130"/>
+                        <Label Content="Name" Width = "170"/>
+                        <Label Content="ID" Width = "50"/>
+                        <Label Content="Chanel" Width = "80"/>
+                        <Label Content="Type" Width = "100"/>
+                        <Label Content="DLC" Width = "50"/>
+                    </StackPanel>
+                    <!--List command-->
+                    <ListBox x:Name="lCmd" SelectedIndex="-1" ItemsSource="{Binding arrview}" Background="WhiteSmoke"  VerticalAlignment="Top" HorizontalAlignment="Left" Height="140" Width="800" SelectionChanged="listCmd_SelectionChanged">
+                        <!--Height="320"-->
+                        <ListBox.ItemTemplate>
+                            <DataTemplate x:Name ="dataCmd" DataType = "{x:Type local:ViewData}">
+                                <StackPanel x:Name="spDetailCmd" Orientation="Horizontal" IsEnabled="{Binding isSellectedCommand, Mode=TwoWay}">
+                                    <Label Content="{Binding row, Mode=TwoWay}" Width = "50" Height = "30" />
+                                    <Button x:Name ="btSend" Width = "80" Height = "30"
+                                       Content="{Binding properties.sentStatus}" Click="btSend_Click"
+                                       />
+                                    <ComboBox  x:Name = "cbTriger" Width = "80" Height = "30"
+                                           ItemsSource="{Binding properties.trigerList}"
+                                           SelectedIndex="{Binding properties.trigerSelectedIdx}">
+                                    </ComboBox>
+                                    <TextBox x:Name="tbCycleTime" Width = "50" Height = "30"
+                                         IsEnabled="{Binding properties.isCycle}"  Text="{Binding properties.cycle, Mode=TwoWay}" TextChanged ="txCycleChange_TextChanged"
+                                         />
+                                    <TextBox Text="{Binding properties.name, Mode=TwoWay}" IsEnabled="{Binding properties.isCreating}" Width = "170" Height = "30" />
+                                    <Label Content="{Binding properties.id, Mode=TwoWay}" Width = "50" Height = "30"/>
+                                    <ComboBox x:Name="cbChanel" Width = "80" Height = "30" 
+                                          ItemsSource="{Binding properties.chanelList}"
+                                          SelectedIndex="{Binding properties.chanelSelectedIdx}">
+                                    </ComboBox>
+                                    <ComboBox x:Name="cbDataType" Width = "100" Height = "30" 
+                                          ItemsSource="{Binding properties.typeList}"
+                                          SelectedIndex="{Binding properties.typeSelectedIdx}">
+                                    </ComboBox>
+                                    <TextBox Text="{Binding properties.dlc, Mode=TwoWay}" IsEnabled="{Binding properties.isCreating}" TextChanged="txDLCChange_TextChanged" Width = "50" Height = "30"/>
+                                    <Button Content="Update" IsEnabled="{Binding properties.isCycle}" Click="btUpdate_Click" Width = "50" Height = "30"></Button>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+
+                    <StackPanel x:Name="stSendStopAll" Orientation="Horizontal" Height = "40">
+                        <Button x:Name="btSendAll" Content="SEND---ALL" Width="150" Click="btSendAll_Click" Margin="20,5,20,5"></Button>
+                        <Button x:Name="btStopAll" Content="STOP---ALL" Width="150" Click="btStopAll_Click" Margin="20,5,20,5"></Button>
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+            <StackPanel x:Name="spProperties" VerticalAlignment="Top" IsEnabled="{Binding isViewCommand}" Background="WhiteSmoke" Width="250" Height="210">
+                <!--Add all command properties in here-->
+                <Grid x:Name="gCmdProperties">
+                    <!--DataContext="{Binding Path=cmdPro, Mode=TwoWay}"-->
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width = "100" />
+                        <ColumnDefinition Width= "120"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height = "30" />
+                        <RowDefinition Height = "30" />
+                        <RowDefinition Height = "30" />
+                        <RowDefinition Height = "30" />
+                        <RowDefinition Height = "30" />
+                        <RowDefinition Height = "30" />
+                        <RowDefinition Height = "30" />
+                    </Grid.RowDefinitions>
+
+                    <Label Grid.Row = "0" Grid.Column = "0" Content="Basic Properties" FontWeight="Bold" />
+                    <Label Grid.Row = "1" Grid.Column = "0" Content="Chanel"/>
+                    <ComboBox Grid.Row = "1" Grid.Column = "1" x:Name="cbChanelPr" 
+                                          SelectionChanged="cbChanel_SelectionChanged"
+                                          ItemsSource="{Binding cmdPro.chanelList}"
+                                          SelectedIndex="{Binding cmdPro.chanelSelectedIdx}">
+                    </ComboBox>
+                    <Label Grid.Row = "2" Grid.Column = "0" Content="DLC"/>
+                    <Label Grid.Row = "2" Grid.Column = "1" Content="{Binding cmdPro.dlc}"/>
+                    <Label Grid.Row = "3" Grid.Column = "0" Content="ID"/>
+                    <Label Grid.Row = "3" Grid.Column = "1" Content="{Binding cmdPro.id}"/>
+                    <!--<Label Grid.Row = "4" Grid.Column = "0" Content="IDE" IsEnabled="{Binding cmdPro.ide}"/>
+                    <CheckBox Grid.Row = "4" Grid.Column = "1" x:Name="chbCmdProIDE" IsEnabled="{Binding cmdPro.ide}" HorizontalAlignment="Center" Height="30" Margin="44,10,44,0" VerticalAlignment="Top" Grid.RowSpan="2"/>-->
+                    <Label Grid.Row = "4" Grid.Column = "0" Content="Name"/>
+                    <TextBox Grid.Row = "4" Grid.Column = "1" 
+                        Text="{Binding cmdPro.name, Mode=TwoWay}"
+                        IsEnabled="False"    />
+                    <Label Grid.Row = "5" Grid.Column = "0" Content="Triger"/>
+                    <ComboBox Grid.Row = "5" Grid.Column = "1" x:Name="cbTrigerPr" 
+                                          SelectionChanged="cbTriger_SelectionChanged"
+                                          ItemsSource="{Binding cmdPro.trigerList}"
+                                          SelectedIndex="{Binding cmdPro.trigerSelectedIdx}">
+                    </ComboBox>
+                    <Label Grid.Row = "6" Grid.Column = "0" Content="Type"/>
+                    <ComboBox Grid.Row = "6" Grid.Column = "1" x:Name="cbDataTypePr" 
+                                          SelectionChanged="cbType_SelectionChanged"
+                                          ItemsSource="{Binding cmdPro.typeList}"
+                                          SelectedIndex="{Binding cmdPro.typeSelectedIdx}">
+                    </ComboBox>
+                    <!--<Label Grid.Row = "8" Grid.Column = "0" Content="CAN FD Properties" FontWeight="Bold"/>
+                    <Label Grid.Row = "9" Grid.Column = "0" Content="BRS" IsEnabled="{Binding cmdPro.brs}"/>
+                    <CheckBox Grid.Row = "9" Grid.Column = "1" x:Name="chbCmdProBRS" IsEnabled="{Binding cmdPro.brs}" IsChecked="False" HorizontalAlignment="Center" Margin="44,10,44,0" Grid.RowSpan="2" Height="30" VerticalAlignment="Top"/>
+                    <Label Grid.Row = "10" Grid.Column = "0" Content="CAN Properties" FontWeight="Bold"/>
+                    <Label Grid.Row = "11" Grid.Column = "0" Content="RTR"/>
+                    <CheckBox Grid.Row = "11" Grid.Column = "1" x:Name="chbCmdProBTR" IsChecked="False" HorizontalAlignment="Center" Margin="44,10,44,0"/>-->
+                </Grid>
+            </StackPanel>
+
+        </StackPanel>
+        <StackPanel x:Name="spSignal" HorizontalAlignment="Left" Width="1050" Height="170">
+            <!--TODO: Signal/Raw Data-->
+            <TabControl HorizontalAlignment="Left" Height="170">
+                <TabItem Header="Signals">
+                    <StackPanel>
+                        <StackPanel x:Name="spTitleSignal" HorizontalAlignment="Left" Orientation="Horizontal" Background="Pink" Height = "30" Width="1050">
+                            <Label Content="Name" Width = "100"/>
+                            <Label Content="Phys Value" Width = "120"/>
+                            <Label Content="Raw Value" Width = "120"/>
+                            <Label Content="Raw Step" Width = "120"/>
+                            <Label Content="Unit" Width = "50"/>
+                            <Label Content="StartBit" Width = "50"/>
+                            <Label Content="Length" Width = "70"/>
+                        </StackPanel>
+                        <!--List all signal of command-->
+                        <ListBox x:Name="lSig" SelectedIndex="0" ItemsSource="{Binding listSigPro}" VerticalAlignment="Top" HorizontalAlignment="Left" Height="101" Width="1025" Background="WhiteSmoke" SelectionChanged="listSig_SelectionChanged">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate x:Name ="dataSig" DataType = "{x:Type local:ViewSignalProperties}">
+                                    <StackPanel x:Name="spDetailSig" Orientation="Horizontal" IsEnabled="{Binding isSellectedSig}" >
+                                        <!--sinal name-->
+                                        <TextBox x:Name="tbNameSig" Text="{Binding name, Mode=TwoWay}" IsEnabled="{Binding isCreating}" Width = "100" Height = "30" />
+                                        <!--sinal phys value: type int - (^ v) or string-combo -->
+                                        <ComboBox x:Name="cbPhyValSig" Width = "120"
+                                                 ItemsSource="{Binding listPhysVal}"
+                                                 SelectedIndex="{Binding valSelectedIndex}">
+                                        </ComboBox>
+                                        <!--sinal raw value-->
+                                        <ComboBox x:Name="cbRawVal"  Width = "120"
+                                                ItemsSource="{Binding listRawVal}"
+                                                SelectedIndex="{Binding valSelectedIndex}"
+                                                IsEnabled="{Binding isSellectedSig, Mode=TwoWay}"
+                                                SelectionChanged="cbRawVal_SelectionChanged" >
+                                        </ComboBox>
+                                        <!--sinal raw step-->
+                                        <TextBox x:Name="tbRawStepSig" Text="{Binding rawStep, Mode=TwoWay}" IsEnabled="{Binding isCreating}" Width = "120"/>
+                                        <!--sinal unit-->
+                                        <Label x:Name="lbUnitSig" Content="" Width = "50"/>
+                                        <!--sinal start bit-->
+                                        <TextBox x:Name="lbStartBitSig" Text="{Binding startBit, Mode=TwoWay}" IsEnabled="{Binding isCreating}" Width = "50" TextChanged="txStartBitChange_TextChanged"/>
+                                        <!--sinal lenght-->
+                                        <TextBox x:Name="lbLenSig" Text="{Binding length, Mode=TwoWay}" IsEnabled="{Binding isCreating}" TextChanged="txLenSigChange_TextChanged" Width = "70"/>
+                                        <!--data to add command-->
+                                        <StackPanel x:Name="stFixSigValue" IsEnabled="{Binding isCreating}" Orientation="Horizontal">
+                                            <Label Content="MinVal"></Label>
+                                            <TextBox x:Name="tbMinValSig" Text="{Binding minRawVal, Mode=TwoWay}" Width = "50"/>
+                                            <Label Content="MaxVal"></Label>
+                                            <TextBox x:Name="tbMaxValSig" Text="{Binding maxRawVal, Mode=TwoWay}" Width = "50"/>
+                                            <Button x:Name="btAssignSignalValue" Content="AssignValue-TODO"></Button>
+                                            <!--Click="btAssignSignalValue_Click"-->
+                                        </StackPanel>
+
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                    </StackPanel>
+                </TabItem>
+                <!--<TabItem Header="Raw Data">
+                    <StackPanel>
+                        <Label Content="T.B.D" Width = "120" FontWeight="Bold" />
+                    </StackPanel>
+                </TabItem>-->
+            </TabControl>
+        </StackPanel>
+        <StackPanel x:Name="spCreatCommand" HorizontalAlignment="Left" Background="Pink" Height="60" Width="1050">
+            <Label Content="CREAT COMMAND----------------------------------------------------------------"></Label>
+            <StackPanel Orientation="Horizontal" Background="White">
+                <Label Content="CREAT NEW COMMAND with ID = "></Label>
+                <TextBox x:Name="txNewCmdID" Text="{Binding newCmd_ID, Mode=TwoWay}" Width="50" Background="Gray" ></TextBox>
+                <Label Content="   ,number Signal = "></Label>
+                <TextBox x:Name="txNumSig" Text="{Binding newCmd_numSig, Mode=TwoWay}" Width="50" Background="Gray"></TextBox>
+                <Label Content="    "></Label>
+                <Button x:Name="btStartCreat" Content="START" Width = "100" Height = "30" Click="btStartCreat_Click"/>
+                <Label Content="    "></Label>
+                <Button x:Name="btSave" IsEnabled="False" Content="SAVE" Width = "100" Height = "30" Click="btSave_Click"/>
+            </StackPanel>
+        </StackPanel>
+        <ListView Name="lLog" Margin="0" HorizontalAlignment="Left" Background="White" Height="120" Width="1030">
+        </ListView>
+    </StackPanel>
+</Window>

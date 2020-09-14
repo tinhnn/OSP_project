@@ -1,0 +1,55 @@
+﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ import namespace="Newtonsoft.Json.Linq" #>
+<#@ output extension=".cs" #>
+module send_oneshoot
+
+<# for (var i = 0; i < _json.Count; ++i) { #>
+<# var item = _json[i]; #>
+<# var mapItem = ((JToken)_mapOdb).Where(x => x["command_id"].ToString() == item.id.ToString()).First(); #>
+<# if (mapItem == null) continue; #>
+def send_msg_<#= item.id #>()
+
+	var [cmd, data, interface]
+
+	// new command
+	imp <#=mapItem["module"] #>:new/0
+	ivk 0
+	slv cmd
+	<# for (var j = 0; j < item.signals.Count; ++j) {  #>
+	<#var signal = item.signals[j]; #>
+	<# var signal_func = mapItem["signals"].Where (x => x["name"] == signal.name).First(); #>
+	<# if (signal_func == null) continue; #>
+
+	imp <#=mapItem["module"] #>:<#=signal_func["setter"]#>
+	ldk <#=signal.value #>
+	llv cmd
+	ivk 2
+	pop 1
+	<# } #>
+
+	// serialize command
+	imp <#=mapItem["module"] #>:serialize/1
+	llv cmd
+	ivk 1
+	slv data
+
+	// get interface
+	imp gen_can_mw:open/1
+	lsi 0 // 0 - stub
+	ldk "<#=item.transmitter#>"
+	ivk 2
+	slv interface
+
+	// send msg
+	imp gen_can_mw:send/2
+	llv data
+	llv interface
+	ivk 2
+	ret
+end
+
+<# } #>

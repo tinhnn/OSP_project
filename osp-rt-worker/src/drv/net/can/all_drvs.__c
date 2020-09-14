@@ -1,0 +1,16 @@
+#include <drv/net/can/can.h>
+#if 0
+#define OSP_RTW_DRV_CAN_REGISTER(DRV, drv)                      \
+    {                                                           \
+        extern osp_rtw_drv_can_fops_t osp_rtw_can_drv_##drv##;  \
+    }
+static void register_all(void) {
+    OSP_RTW_DRV_CAN_REGISTER
+}
+osp_rtw_ret_t osp_rtw_drv_can_register_all(void) {
+    osp_rtw_ret_t ret = OSP_RTW_RET_ERROR_NONE;
+
+    return ret;
+}
+#endif
+/*EOF*/

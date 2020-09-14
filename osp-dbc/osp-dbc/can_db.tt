@@ -1,0 +1,142 @@
+﻿<#@ template language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ output extension=".aml" #>
+module can_db
+
+def id(cmd)
+    imp std:import/2
+
+    ldk "id/0"
+
+    imp std-tuple:get/2
+    ldk 0
+    llv cmd
+    ivk 2
+
+    ivk 2
+    ret
+end
+
+def id_format(cmd)
+    imp std:import/2
+
+    ldk "id_format/0"
+
+    imp std-tuple:get/2
+    ldk 0
+    llv cmd
+    ivk 2
+
+    ivk 2
+    ret
+end
+
+def dlc(cmd)
+    imp std:import/2
+
+    ldk "dlc/0"
+
+    imp std-tuple:get/2
+    ldk 0
+    llv cmd
+    ivk 2
+
+    ivk 2
+    ret
+end
+
+def tx_method(cmd)
+    imp std:import/2
+
+    ldk "tx_method/0"
+
+    imp std-tuple:get/2
+    ldk 0
+    llv cmd
+    ivk 2
+
+    ivk 2
+    ret
+end
+
+def cycle_time(cmd)
+    imp std:import/2
+
+    ldk "cycle_time/0"
+
+    imp std-tuple:get/2
+    ldk 0
+    llv cmd
+    ivk 2
+
+    ivk 2
+    ret
+end
+
+def transmitter(cmd)
+    imp std:import/2
+
+    ldk "transmitter/0"
+
+    imp std-tuple:get/2
+    ldk 0
+    llv cmd
+    ivk 2
+
+    ivk 2
+    ret
+end
+
+def set_signal(cmd, signalname, value)
+    imp std:import/2
+    imp std-string:concat/2
+    ldk "/2"
+    imp std-string:concat/2
+    llv signalname
+    ldk "set_"
+    ivk 2
+    ivk 2
+    imp std-tuple:get/2
+    ldk 0
+    llv cmd
+    ivk 2
+    ivk 2
+    ret
+end
+
+def serialize(cmd)
+    var [can_frm]
+    imp std:import/2
+    ldk "serialize/1"
+    imp std-tuple:get/2
+    ldk 0
+    llv cmd
+    ivk 2
+    ivk 2
+    llv cmd
+    ivk 1
+
+    slv can_frm
+    llv can_frm
+    ret
+end
+
+def deserialize(cmd)
+    imp std:import/2
+
+    ldk "deserialize/1"
+
+    imp std-tuple:get/2
+    ldk 0
+    llv cmd
+    ivk 2
+    ivk 2
+
+
+    llv cmd
+    ivk 1
+    ret
+end

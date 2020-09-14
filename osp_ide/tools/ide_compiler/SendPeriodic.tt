@@ -1,0 +1,134 @@
+﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ import namespace="Newtonsoft.Json.Linq" #>
+<#@ output extension=".cs" #>
+module periodic_message
+
+def get_version()
+    ldk "<#=GetHashString(_json.ToString())#>"
+    ret
+end
+
+def create_msg_tuple (msg, port, cycle_time)
+    var [msg_tuple]
+    imp std-tuple:new/1
+    lsi 5
+    ivk 1
+    slv msg_tuple
+
+    // set counter to tuple
+    imp std-tuple:set/3
+    lsi 0
+    lsi 0
+    llv msg_tuple
+    ivk 3
+    pop 1
+
+    // set cycle time to tuple
+    imp std-tuple:set/3
+	llv cycle_time
+    lsi 1
+    llv msg_tuple
+    ivk 3
+    pop 1
+
+    // set command to tuple
+    imp std-tuple:set/3
+    llv msg
+    lsi 2
+    llv msg_tuple
+    ivk 3
+    pop 1
+
+    // set serialize data to tupple
+    imp std-tuple:set/3
+    imp can_db:serialize/1
+    llv msg
+    ivk 1
+    lsi 3
+    llv msg_tuple
+    ivk 3
+    pop 1
+
+    // set inteface
+    imp std-tuple:set/3
+    imp gen_can_mw:open/1
+    lsi 1  // 1 = stub
+    llv port
+    ivk 2
+    lsi 4
+    llv msg_tuple
+    ivk 3
+	pop 1
+	llv msg_tuple
+
+    ret
+end
+
+def get_list_command()
+<#if( _json.Count == 0) {#>
+	var [lst_cmd]
+	imp std-tuple:new/1
+	lsi 0
+	ivk 1
+	slv lst_cmd
+<#} else {#>
+<#StringBuilder variable = new StringBuilder();#>
+<#variable.Append(" cmd_" + _json[0].id).Append(", tuple_" + _json[0].id); #>
+<#for (var i = 1; i < _json.Count; ++i) {#>
+    <#variable.Append(", cmd_" + _json[i].id).Append(", tuple_" + _json[i].id); #>
+<#}#>
+
+    var [lst_cmd,<#=variable.ToString()#>]
+
+    // new tuple n command
+    imp std-tuple:new/1
+    lsi <#= _json.Count#>
+    ivk 1
+    slv lst_cmd
+<#for (var i = 0; i < _json.Count; ++i) {#>
+<# var item = _json[i]; #>
+<# var mapItem = ((JToken)_mapOdb).Where(x => x["command_id"].ToString() == item.id.ToString()).First(); #>
+<# if (mapItem == null) continue; #>
+
+    // set data for command <#= i#>
+    imp <#=mapItem["module"] #>:new/0
+    ivk 0
+    slv <#="cmd_" + _json[i].id#>
+    <# for (var j = 0; j < item.signals.Count; ++j) {  #>
+    <#var signal = item.signals[j]; #>
+    <# var signal_func = mapItem["signals"].Where (x => x["name"] == signal.name).First(); #>
+    <# if (signal_func == null) continue; #>
+
+    imp <#=mapItem["module"] #>:<#=signal_func["setter"]#>
+    ldk <#=signal.value #>
+    llv <#="cmd_" + _json[i].id#>
+    ivk 2
+    pop 1
+    <# } #>
+
+    // create tuple data
+    imp periodic_message:create_msg_tuple/3
+	lsi <#=item.cycletime#>
+    ldk "<#=item.transmitter#>"
+    llv <#="cmd_" + _json[i].id#>
+    ivk 3
+    slv <#="tuple_" + _json[i].id #>
+
+    // set tuple command to list tuple command
+    imp std-tuple:set/3
+    llv <#="tuple_" + _json[i].id #>
+    lsi <#=i#>
+    llv lst_cmd
+    ivk 3
+    pop 1
+<#}#>
+<#}#>
+
+	llv lst_cmd
+
+    ret
+end

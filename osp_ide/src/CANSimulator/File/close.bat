@@ -1,0 +1,1 @@
+taskkill /FI "Windowtitle eq can_simulator_consol"

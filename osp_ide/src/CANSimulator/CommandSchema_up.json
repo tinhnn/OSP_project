@@ -1,0 +1,122 @@
+{
+    "type": "array",
+    "additionalItems": false,
+    "minItems": 1,
+    "maxItems": 1000,
+    "uniqueItems": false,
+    "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+            "id": {
+                "type": "integer"
+            },
+            "name": {
+                "type": "string"
+            },
+            "id_format": {
+                "type": "string",
+                "enum": [
+                    "standard",
+                    "extended"
+                ]
+            },
+            "dlc": {
+                "type": "integer"
+            },
+            "tx_method": {
+                "type": "string",
+                "enum": [
+                    "cyclic",
+                    "on_change",
+                    "cyclic&on_change"
+                ]
+            },
+            "cycle_time": {
+                "type": "integer"
+            },
+            "transmitter": {
+                "type": "string"
+            },
+            "comment": {
+                "type": "string"
+            },
+            "signals": {
+                "type": "array",
+                "additionalItems": true,
+                "uniqueItems": true,
+                "items": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                        "id": {
+                            "type": "integer"
+                        },
+                        "name": {
+                            "type": "string"
+                        },
+                        "start_bit": {
+                            "type": "integer"
+                        },
+                        "length": {
+                            "type": "integer"
+                        },
+                        "byte_order": {
+                            "type": "string",
+                            "enum": [
+                                "little_endian",
+                                "big_endian"
+                            ]
+                        },
+                        "value_type": {
+                            "type": "string",
+                            "enum": [
+                                "signed",
+                                "unsigned",
+                                "float",
+                                "double"
+                            ]
+                        },
+                        "description": {
+                            "type": "string"
+                        },
+                        "init_value": {
+                            "type": "number"
+                        },
+                        "resolution": {
+                            "type": "number"
+                        },
+                        "minimum": {
+                            "type": "number"
+                        },
+                        "maximum": {
+                            "type": "number"
+                        }
+                    }
+                },
+                "required": [
+                    "id",
+                    "name",
+                    "start_bit",
+                    "length",
+                    "byte_order",
+                    "value_type",
+                    "init_value",
+                    "resolution",
+                    "minimum",
+                    "maximum"
+                ]
+            }
+        },
+        "required": [
+            "id",
+            "name",
+            "id_format",
+            "dlc",
+            "tx_method",
+            "cycle_time",
+            "transmitter",
+            "signals"
+        ]
+    }
+}

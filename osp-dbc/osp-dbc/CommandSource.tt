@@ -1,0 +1,270 @@
+﻿<#@ template language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+module <#= _json.name #>
+
+def get_interface()
+	imp std-io:print/*
+	ldk "\t]\n}"
+<# for (var i = _json.signals.Count; i > 0 ; i--) { #>
+<# var signal = _json.signals[i-1]; #>
+<# if(i == _json.signals.Count) { #>
+	ldk "\t\t}\n"
+<# } else { #>
+	ldk "\t\t},\n"
+<# } #>
+	ldk "\t\t\"setter\": \"set_<#= signal.name #>\"\n"
+	ldk "\t\t\"getter\": \"get_<#= signal.name #>\",\n"
+	ldk "\t\t\"name\": \"<#= signal.name #>\",\n"
+	ldk "\t\t{\n"
+<# } #>
+	ldk "\t\"signals\": [\n"
+	ldk "\t\"command_id\": \"<#= _json.id#>\",\n"
+	ldk "{\n\t\"module\": \"<#= _json.name #>\",\n"
+	ivk <#= _json.signals.Count*5 + 4 #>
+	ret
+end
+
+def verify_signals(value, minimum, resolution)
+    var [val_sub, val_div, val]
+
+    llv minimum
+    llv value
+    sub
+    slv val_sub
+
+    llv resolution
+    llv val_sub
+    div
+    slv val_div
+
+    imp std:to_integer/1
+    llv val_div
+    ivk 1
+    slv val
+
+    llv val
+    ret
+end
+
+def id()
+    ldk <#= _json.id #>
+    ret
+end
+
+def id_format()
+    ldk "<#= _json.id_format #>"
+    ret
+end
+
+def dlc()
+    ldk <#= _json.dlc #>
+    ret
+end
+
+def tx_method()
+    ldk "<#= _json.tx_method #>"
+    ret
+end
+
+def cycle_time()
+    ldk <#= _json.cycle_time #>
+    ret
+end
+
+def transmitter()
+    ldk "<#= _json.transmitter #>"
+    ret
+end
+
+def new()
+    imp std-tuple:new/1
+    ldk <#= _json.signals.Count + 1 #>
+    ivk 1
+    // init value for module name
+    imp std-tuple:set/3
+    ldk "<#= _json.name #>"
+    ldk <#= 0 #>
+    llv 0
+    ivk 3
+<# for (var i = 0; i < _json.signals.Count; ++i) { #>
+<# var signal = _json.signals[i]; #>
+    // init value for <#= signal.name #>
+    imp std-tuple:set/3
+    ldk <#= signal.init_value #>
+    ldk <#= i+1 #>
+    llv 0
+    ivk 3
+<# } #>
+    pop <#= _json.signals.Count + 1 #>
+    ret
+end
+<# for (var i = 0; i < _json.signals.Count; ++i) { #>
+<# var signal = _json.signals[i]; #>
+
+// getter/setter <#= signal.name #>
+def get_<#= signal.name #>(self)
+    imp std-tuple:get/2
+    ldk <#= i+1 #>
+    llv self
+    ivk 2
+    ret
+end
+
+def set_<#= signal.name #>(self, value)
+    imp std-tuple:set/3
+    llv value
+    ldk <#= i+1 #>
+    llv self
+    ivk 3
+    ret
+end
+<# } #>
+
+def validate_data(self)
+    var [error_array]
+    imp std-array:new/1
+    ldk <#= _json.signals.Count #>
+    ivk 1
+    slv error_array
+
+    // Validate msg_name
+    imp std-tuple:get/2
+    ldk 0
+    llv self
+    ivk 2
+    ldk "<#= _json.name #>"
+    eq
+    jin 1
+    jmp 4
+    imp std-array:push/2
+    ldk "name: msg_name, reason: msg name not existed"
+    llv error_array
+    ivk 2
+
+<# for (var i = 0; i < _json.signals.Count; i++) { #>
+<# var signal = _json.signals[i]; #>
+    // validate signal[<#= i #>] type
+<# if(signal.value_type == "real") { #>
+    imp std:is_real/1
+<# } else {#>
+    imp std:is_integer/1
+<# } #>
+    imp std-tuple:get/2
+    ldk <#= i+1 #>
+    llv self
+    ivk 2
+    ivk 1
+    jin 1
+    jmp 4
+    imp std-array:push/2
+    ldk "name: <#= signal.name #>, reason: <#= signal.name #> not a <#= check_value_type(signal.value_type) #>"
+    llv error_array
+    ivk 2
+    // validate signal[<#= i #>] value
+
+<# } #>
+
+    ret
+end
+
+def serialize(self)
+    var [can_frame, buffer]
+
+    imp std-tuple:new/1
+    lsi 3
+    ivk 1
+    slv can_frame
+
+    imp std-buffer:new/1
+    ldk <#= _json.dlc #>
+    ivk 1
+    slv buffer
+
+    imp std-buffer:resize/2
+    lsi <#= _json.dlc #>
+    llv buffer
+    ivk 2
+    pop 1
+    // Set Data to buffer
+<# for (var i = 0; i < _json.signals.Count; i++) { #>
+<# var signal = _json.signals[i]; #>
+    //Set signal <#= i+1 #>
+<# if(signal.value_type == "bool") { #>
+    imp std-buffer-bits:set_bool/3
+    ldk <#= signal.start_bit #>	// start bit
+    imp std-tuple:get/2	// Value
+    ldk <#= i+1 #>
+    llv self
+    ivk 2
+    llv buffer
+    ivk 3
+<# }else { #>
+<# if(signal.byte_order == "little_endian") { #>
+    imp std-buffer-bits:set_sint_le/4
+<# } else { #>
+    imp std-buffer-bits:set_sint_be/4
+<# } // endian #>
+    ldk <#= signal.length #>	// len
+    ldk <#= signal.start_bit #>	// start bit
+<# if(signal.value_type == "real") { #>	// convert real to integer
+    imp <#= _json.name #>:verify_signals/3
+    ldk <#= signal.resolution #>	// resolution
+    ldk <#= signal.minimum #>	// minimum
+    imp std-tuple:get/2
+    ldk <#= i+1 #>
+    llv self
+    ivk 2
+    ivk 3
+<# } else { #>
+    imp std-tuple:get/2	// Value
+    ldk <#= i+1 #>
+    llv self
+    ivk 2
+<# } // real or integer #>
+    llv buffer
+    ivk 4
+<# } // bool or integer  #>
+<# } // Set Data to buffer #>
+
+    // Set Id to can_frame (idx 0)
+    imp std-tuple:set/3
+    lsi <#= _json.id #>	// id
+    lsi 0	// index
+    llv can_frame
+    ivk 3
+    // Set dlc to can_frame (idx 1)
+    imp std-tuple:set/3
+    lsi <#= _json.dlc #>	// dlc
+    lsi 1	// index
+    llv can_frame
+    ivk 3
+    // Set data to can_frame (idx 2)
+    imp std-tuple:set/3
+    llv buffer
+    lsi 2
+    llv can_frame
+    ivk 3
+
+    llv can_frame
+    ret
+end
+
+def deserialize(frm)
+
+    ret
+end
+<# for (var i = 0; i < _json.signals.Count; i++) { #>
+<# var signal = _json.signals[i]; #>
+<# if(signal.value_type == "enum") { #>
+<# for(var j=0; j<signal.description.Count; j++){ #>
+
+def <#= signal.name #><#= signal.description[j].name #>()
+    ldk <#= signal.description[j].value #>
+    ret
+end
+<# } #>
+<# } #>
+<# } #>

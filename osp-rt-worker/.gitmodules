@@ -1,0 +1,9 @@
+[submodule "avm"]
+	path = avm
+	url = https://github.com/innostory/avm
+[submodule "externals/lwlog"]
+	path = externals/lwlog
+	url = https://github.com/Akagi201/lwlog
+[submodule "externals/ProgramOptions"]
+	path = externals/ProgramOptions
+	url = https://github.com/Fytch/ProgramOptions.hxx

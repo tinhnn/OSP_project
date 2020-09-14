@@ -1,0 +1,3 @@
+[submodule "src/osp-dbc"]
+	path = src/osp-dbc
+	url = https://github.com/innostory/osp-dbc

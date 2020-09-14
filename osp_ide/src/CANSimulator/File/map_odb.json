@@ -1,0 +1,167 @@
+[
+	{
+	    "module": "CAN_MSG1",
+	    "command_id": "1",
+	    "signals": [
+	        {
+	            "name": "sig_name_0",
+	            "getter": "get_sig_name_0/1",
+	            "setter": "set_sig_name_0/2"
+	        },
+	        {
+	            "name": "sig_name_1",
+	            "getter": "get_sig_name_1/1",
+	            "setter": "set_sig_name_1/2"
+	        },
+	        {
+	            "name": "sig_name_2",
+	            "getter": "get_sig_name_2/1",
+	            "setter": "set_sig_name_2/2"
+	        },
+	        {
+	            "name": "sig_name_3",
+	            "getter": "get_sig_name_3/1",
+	            "setter": "set_sig_name_3/2"
+	        }
+	    ]
+	},
+	{
+	    "module": "CAN_MSG2",
+	    "command_id": "2",
+	    "signals": [
+	        {
+	            "name": "signal_1",
+	            "getter": "get_signal_1/1",
+	            "setter": "set_signal_1/2"
+	        },
+	        {
+	            "name": "signal_2",
+	            "getter": "get_signal_2/1",
+	            "setter": "set_signal_2/2"
+	        }
+	    ]
+	},
+	{
+	    "module": "CAN_MSG3",
+	    "command_id": "3",
+	    "signals": [
+	        {
+	            "name": "sig_name_0",
+	            "getter": "get_sig_name_0/1",
+	            "setter": "set_sig_name_0/2"
+	        },
+	        {
+	            "name": "sig_name_1",
+	            "getter": "get_sig_name_1/1",
+	            "setter": "set_sig_name_1/2"
+	        },
+	        {
+	            "name": "sig_name_2",
+	            "getter": "get_sig_name_2/1",
+	            "setter": "set_sig_name_2/2"
+	        }
+	    ]
+	},
+	{
+	    "module": "CAN_MSG4",
+	    "command_id": "4",
+	    "signals": [
+	        {
+	            "name": "signal_1",
+	            "getter": "get_signal_1/1",
+	            "setter": "set_signal_1/2"
+	        },
+	        {
+	            "name": "signal_2",
+	            "getter": "get_signal_2/1",
+	            "setter": "set_signal_2/2"
+	        }
+	    ]
+	},
+	{
+	    "module": "CAN_MSG5",
+	    "command_id": "5",
+	    "signals": [
+	        {
+	            "name": "sig_name_0",
+	            "getter": "get_sig_name_0/1",
+	            "setter": "set_sig_name_0/2"
+	        },
+	        {
+	            "name": "sig_name_1",
+	            "getter": "get_sig_name_1/1",
+	            "setter": "set_sig_name_1/2"
+	        },
+	        {
+	            "name": "sig_name_2",
+	            "getter": "get_sig_name_2/1",
+	            "setter": "set_sig_name_2/2"
+	        }
+	    ]
+	},
+	{
+	    "module": "CAN_MSG6",
+	    "command_id": "6",
+	    "signals": [
+	        {
+	            "name": "signal_1",
+	            "getter": "get_signal_1/1",
+	            "setter": "set_signal_1/2"
+	        },
+	        {
+	            "name": "signal_2",
+	            "getter": "get_signal_2/1",
+	            "setter": "set_signal_2/2"
+	        }
+	    ]
+	},
+	{
+	    "module": "CAN_MSG7",
+	    "command_id": "7",
+	    "signals": [
+	        {
+	            "name": "sig_name_0",
+	            "getter": "get_sig_name_0/1",
+	            "setter": "set_sig_name_0/2"
+	        },
+	        {
+	            "name": "sig_name_1",
+	            "getter": "get_sig_name_1/1",
+	            "setter": "set_sig_name_1/2"
+	        },
+	        {
+	            "name": "sig_name_2",
+	            "getter": "get_sig_name_2/1",
+	            "setter": "set_sig_name_2/2"
+	        }
+	    ]
+	},
+	{
+	    "module": "CAN_MSG8",
+	    "command_id": "8",
+	    "signals": [
+	        {
+	            "name": "signal_1",
+	            "getter": "get_signal_1/1",
+	            "setter": "set_signal_1/2"
+	        },
+	        {
+	            "name": "signal_2",
+	            "getter": "get_signal_2/1",
+	            "setter": "set_signal_2/2"
+	        }
+	    ]
+	}
+	,
+	{
+	    "module": "CMDName___new10",
+	    "command_id": "10",
+	    "signals": [
+	        {
+	            "name": "sig_name_0",
+	            "getter": "get_sig_name_0/1",
+	            "setter": "set_sig_name_0/2"
+	        }
+	    ]
+	}
+]
